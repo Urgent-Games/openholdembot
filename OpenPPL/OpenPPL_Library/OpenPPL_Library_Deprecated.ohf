@@ -242,9 +242,8 @@ BitOr [(FourthHoleCardSuit == DominantSuit) ? (1 << RankOfFourthHoleCard) : 0]
 BitOr RankbitsPlayer_DominantSuit
 
 ##RankHiPlayer_DominantSuit##
-// Holdem only ATM
+// Holdem only aRM
 WHEN ((rankhiplayer == RankOfFirstHoleCard) AND (FirstHoleCardSuit == DominantSuit)) RETURN rankhiplayer FORCE
-WHEN ((rankhiplayer == RankOfSecondHoleCard) AND (SecondHoleCardSuit == DominantSuit)) RETURN rankhiplayer FORCE
 WHEN Others RETURN rankloplayer FORCE
 
 ##RankbitsCommon_DominantSuitCommon##

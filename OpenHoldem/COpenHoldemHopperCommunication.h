@@ -24,8 +24,8 @@ const int WMA_DODISCONNECT	= WM_APP + 3;
 const int WMA_CONNECTEDHWND	= WM_APP + 4;
 const int WMA_SETFLAG       = WM_APP + 5;
 const int WMA_RESETFLAG     = WM_APP + 6;
-const int WMA_ISREADY       = WM_APP + 7; 
-const int WMA_GETSYMBOL     = WM_APP + 8;
+const int WMA_ISREADY       = WM_APP + 7;
+
 
 class COpenHoldemHopperCommunication: public CWnd
 {
@@ -33,14 +33,13 @@ public:
 	COpenHoldemHopperCommunication();
 	~COpenHoldemHopperCommunication();
 public:
-    LRESULT OnSetWindowText(WPARAM, LPARAM title);	
-    LRESULT OnConnectMessage(WPARAM, LPARAM hwnd);
-    LRESULT OnDisconnectMessage(WPARAM, LPARAM);
-    LRESULT OnConnectedHwndMessage(WPARAM, LPARAM);
-    LRESULT OnSetFlagMessage(WPARAM, LPARAM flag_to_set);
-    LRESULT OnResetFlagMessage(WPARAM, LPARAM flag_to_reset);
-    LRESULT OnIsReadyMessage(WPARAM, LPARAM);
-    LRESULT OnGetSymbolMessage(WPARAM, LPARAM symbol);
+	LRESULT OnSetWindowText(WPARAM, LPARAM title);
+	LRESULT OnConnectMessage(WPARAM, LPARAM hwnd);
+	LRESULT OnDisconnectMessage(WPARAM, LPARAM);
+	LRESULT OnConnectedHwndMessage(WPARAM, LPARAM);
+	LRESULT OnSetFlagMessage(WPARAM, LPARAM flag_to_set);
+	LRESULT OnResetFlagMessage(WPARAM, LPARAM flag_to_reset);
+	LRESULT OnIsReadyMessage(WPARAM, LPARAM);
 protected:
 	DECLARE_MESSAGE_MAP()
 };

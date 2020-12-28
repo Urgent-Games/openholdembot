@@ -14,6 +14,8 @@
 #ifndef INC_MYCTOOLBAR_H
 #define INC_MYCTOOLBAR_H
 
+#include "MyCToolBar.h"
+
 // CMyToolBar
 
 class CMyToolBar : public CToolBar

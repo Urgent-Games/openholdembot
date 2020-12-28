@@ -94,8 +94,7 @@ hand$99 ? 9 :
 hand$TT ? 10 :   
 hand$JJ ? 11 :   
 hand$QQ ? 12 :   
-hand$KK ? 13 :
-hand$AA ? 14 :
+hand$KK ? 13 :   
 HINT_There_Is_No_Pair_In_Hand__MinusOne  	
 
 ##HINT_There_Is_No_Pair_In_Hand__MinusOne##
@@ -262,6 +261,22 @@ WHEN hand$QQ AND (BestBoardCard < queen) RETURN true FORCE
 WHEN IsPreflop RETURN false FORCE
 WHEN (RankOfTopPairInHand < SecondBestBoardCard) AND (RankOfTopPairInHand > ThirdBestBoardCard) RETURN true FORCE
 
+
+##Omaha_TopPairRank##
+HaveTopPair ? BestBoardCard : 0
+
+##Omaha_SecondTopPairRank##
+HaveSecondTopPair ? SecondBestBoardCard : 0
+
+##Omaha_ThirdTopPairRank##
+HaveThirdTopPair ? ThirdBestBoardCard : 0
+
+##Omaha_FourthTopPairRank##
+HaveFourthTopPair ? FourthBestBoardCard : 0
+
+##Omaha_FifthTopPairRank##
+HaveFifthTopPair ? FifthBestBoardCard : 0
+
 ##Omaha_HaveThirdTopSet##
 WHEN IsPreflop RETURN false FORCE
 WHEN RankOfTopPairInHand > 0
@@ -340,8 +355,16 @@ Omaha_FlushDraw_Counter == 2
 OR (RankOfTopPairInHand > 0 AND TripsOnBoard)
 OR (HaveTrips AND BitCount(rankbitsplayer & rankbitscommon & ConstAllRanksWithoutAceLow)>=2)
 
+
+##Omaha_HaveNutFullHouse##
+WHEN IsPreflop RETURN false FORCE
+WHEN HaveTopTrips
+AND RankOfTopPairOnBoard == BestBoardCard
+AND HaveSecondTopPair RETURN true FORCE
+
 ##Omaha_NutFullHouseOrFourOfAKind##
 msgbox$NutFullHouseOrFourOfAKind_Unot_Uyet_Uimplemented_D
+
 
 ##Omaha_HaveNutStraight##
 WHEN NOT Omaha_HaveStraight RETURN false FORCE
@@ -370,6 +393,18 @@ Omaha_StraightDraw_Outs >= 4
 ##Omaha_HaveOpenEndedStraightDraw##
 Omaha_StraightDraw_Outs >= 8
 
+##RankTripsOnBoard##
+WHEN IsPreflop RETURN false FORCE
+WHEN FirstFlopCard == SecondFlopCard AND SecondFlopCard == ThirdFlopCard RETURN  FirstFlopCard FORCE
+WHEN FirstFlopCard == SecondFlopCard AND SecondFlopCard == TurnCard RETURN  FirstFlopCard FORCE
+WHEN FirstFlopCard == SecondFlopCard AND SecondFlopCard == RiverCard RETURN  FirstFlopCard FORCE
+WHEN FirstFlopCard == ThirdFlopCard AND ThirdFlopCard == TurnCard RETURN  FirstFlopCard FORCE
+WHEN FirstFlopCard == ThirdFlopCard AND ThirdFlopCard == RiverCard RETURN  FirstFlopCard FORCE
+WHEN FirstFlopCard == TurnCard AND TurnCard == RiverCard RETURN  FirstFlopCard FORCE
+WHEN SecondFlopCard == ThirdFlopCard AND ThirdFlopCard == TurnCard RETURN  SecondFlopCard FORCE
+WHEN SecondFlopCard == ThirdFlopCard AND ThirdFlopCard == RiverCard RETURN  SecondFlopCard FORCE
+WHEN SecondFlopCard == TurnCard AND TurnCard == RiverCard RETURN  SecondFlopCard FORCE
+WHEN ThirdFlopCard == TurnCard AND TurnCard == RiverCard RETURN  ThirdFlopCard FORCE
 
 ##Omaha_HaveQuads##
 WHEN NOT PairOnBoard RETURN false FORCE
@@ -382,10 +417,6 @@ WHEN RankOfTopPairOnBoard == RankOfTopPairInHand RETURN true FORCE
 WHEN RankOfTopPairOnBoard == RankOfBottomPairInHand RETURN true FORCE
 WHEN RankOfBottomPairOnBoard == RankOfTopPairInHand RETURN true FORCE
 WHEN RankOfBottomPairOnBoard == RankOfBottomPairInHand RETURN true FORCE
-
-##Omaha_HaveNutQuads##
-WHEN NOT Omaha_HaveQuads RETURN false FORCE
-WHEN HaveTopTrips RETURN true FORCE
 
 ##Omaha_HaveNutQuads##
 WHEN (HaveQuads AND TripsOnBoard) RETURN true FORCE
@@ -533,7 +564,7 @@ WHEN SuitOfThirdFlopCard == SuitOfTurnCard
 	AND (SuitOfFirstFlopCard != SuitOfThirdFlopCard) RETURN true FORCE
 
 ##Omaha_SuitsInHand##
-   (suitbitsplayer_clubs  ? 1 : 0)
+  (suitbitsplayer_clubs    ? 1 : 0)
 + (suitbitsplayer_diamonds ? 1 : 0)
 + (suitbitsplayer_hearts   ? 1 : 0)
 + (suitbitsplayer_spades   ? 1 : 0)

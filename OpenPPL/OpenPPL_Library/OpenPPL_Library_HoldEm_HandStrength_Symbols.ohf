@@ -335,6 +335,9 @@ RankOfFirstHoleCard == ThirdBestBoardCard OR RankOfSecondHoleCard == ThirdBestBo
 ##HoldEm_HaveFifthTopPair##
 RankOfFirstHoleCard == FifthBestBoardCard OR RankOfSecondHoleCard == FifthBestBoardCard 
 
+##FifthTopPairRank##
+(RankOfFirstHoleCard == FifthBestBoardCard OR RankOfSecondHoleCard == FifthBestBoardCard) ? FifthBestBoardCard: 0
+
 ##HoldEm_HaveThirdTopSet##
 ispair AND RankOfFirstHoleCard == ThirdBestBoardCard
 
@@ -1018,17 +1021,6 @@ OR ((rankbits >> 8) & 0b111100) == 0b111100 // KQJT
 ##HoldEm_HaveQuads##
 [ isfourofakind AND (nrankedcommon < 4) ]
 
-##HoldEm_HaveNutQuads##
-WHEN NOT isfourofakind RETURN false FORCE
-WHEN PairInHand AND RankOfFirstHoleCard==RankOfTopPairOnBoard RETURN true FORCE
-WHEN NOT PairInHand AND TripsOnBoard AND TripsRank==RankOfTopPairOnBoard RETURN true FORCE
-WHEN NOT QuadsOnBoard RETURN false FORCE
-WHEN hand$A RETURN true FORCE
-WHEN hand$K AND RankOfTopPairOnBoard == ace RETURN true FORCE
-// Split pot scenarios
-WHEN RankOfTopPairOnBoard < ace AND BestBoardCard == ace RETURN true FORCE
-WHEN RankOfTopPairOnBoard == ace AND SecondBestBoardCard == king RETURN true FORCE
-
 ##HoldEm_HaveOverPair##
 ispair AND (rankhiplayer > rankhicommon)
 
@@ -1129,10 +1121,20 @@ OR [(betround >= flop) AND (RankOfSecondHoleCard == HighestUnpairedBoardCard)]
 ##HoldEm_HaveTopPair##
 [ RankOfFirstHoleCard==rankhicommon OR RankOfSecondHoleCard==rankhicommon ]
 
+##TopPairRank##
+WHEN HaveTopPair AND RankOfFirstHoleCard  == rankhicommon RETURN RankOfFirstHoleCard  FORCE
+WHEN HaveTopPair AND RankOfSecondHoleCard == rankhicommon RETURN RankOfSecondHoleCard FORCE
+WHEN Others RETURN 0 FORCE
+
 ##TopPairKickerRank##
 WHEN HaveTopPair AND RankOfFirstHoleCard  == rankhicommon RETURN RankOfSecondHoleCard  FORCE
 WHEN HaveTopPair AND RankOfSecondHoleCard == rankhicommon RETURN RankOfFirstHoleCard FORCE
 WHEN Others RETURN 0 FORCE
+
+##SecondTopPairRank##
+HaveSecondTopPair AND RankOfFirstHoleCard  == SecondBestBoardCard ? RankOfFirstHoleCard :
+HaveSecondTopPair AND RankOfSecondHoleCard == SecondBestBoardCard ? RankOfSecondHoleCard :
+0
 
 ##HoldEm_HaveTopSet##
 (ispair AND (rankhiplayer == rankhicommon))
