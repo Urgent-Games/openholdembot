@@ -135,84 +135,19 @@ void clear_log() {
 }
 
 void start_log(int current_session_iD, bool delete_old_log) {
-  if (log_fp != NULL) {
-    return;
-  }
-  assert(current_session_iD >= 0);
-  session_ID = current_session_iD;
-  CSLock lock(log_critsec);
-  if (delete_old_log) {
-    delete_log();
-  }
-  // Append (or create) log
-  if ((log_fp = _fsopen(LogFilePath(session_ID).GetString(), "a", _SH_DENYWR)) != 0) {
-    write_log_separator(k_always_log_basic_information, "LOG FILE OPEN");
-    // License information
-    write_log(k_always_log_basic_information, "OpenHoldem\n");
-    //!!!write_log(k_always_log_basic_information, "Version %s\n", VERSION_TEXT);
-    write_log(k_always_log_basic_information, "Licensed under GPLv3\n");
-    write_log(k_always_log_basic_information, "http://www.maxinmontreal.com/forums/index.php\n");
-    write_log(k_always_log_basic_information, "https://github.com/OpenHoldem/openholdembot/\n");
-    write_log(k_always_log_basic_information, "http://www.gnu.org/licenses/gpl.html\n");
-    write_log(k_always_log_basic_information, "Disclaimer: this is an open-source project.\n");
-    write_log(k_always_log_basic_information, "We are not related to any shops, stores and/or scam-artists.\n");
-    write_log_separator(k_always_log_basic_information, "");
-    fflush(log_fp);
-  }
+
 }
 
 void write_log_vl(bool debug_settings_for_this_message, const char* fmt, va_list vl) {
-  char		buff[10000];
-  char		nowtime[26];
-  write_footer_if_necessary();
-  if (debug_settings_for_this_message == false) {
-    return;
-  }
-  if (log_fp != NULL) {
-    CSLock lock(log_critsec);
-    vsprintf_s(buff, 10000, fmt, vl);
-    get_time(nowtime);
-    fprintf(log_fp, "%s > %s", nowtime, buff);
-    fflush(log_fp);
-  }
+
 }
 
 void write_log(bool debug_settings_for_this_message, const char* fmt, ...) {
-  char		buff[10000];
-  va_list		ap;
-  char		nowtime[26];
-  if (debug_settings_for_this_message == false) {
-    return;
-  }
-  if (log_fp == NULL) {
-    return;
-  }
-  write_footer_if_necessary();
-  CSLock lock(log_critsec);
-  va_start(ap, fmt);
-  vsprintf_s(buff, 10000, fmt, ap);
-  get_time(nowtime);
-  fprintf(log_fp, "%s - %s", nowtime, buff);
-  va_end(ap);
-  fflush(log_fp);
+
 }
 
 void write_log_nostamp(bool debug_settings_for_this_message, const char* fmt, ...) {
-  char		buff[10000];
-  va_list		ap;
-  write_footer_if_necessary();
-  if (debug_settings_for_this_message == false) {
-    return;
-  }
-  if (log_fp == NULL) {
-    return;
-  }
-  CSLock lock(log_critsec);
-  va_start(ap, fmt);
-  vsprintf_s(buff, 10000, fmt, ap);
-  fprintf(log_fp, "%s", buff);
-  va_end(ap);
-  fflush(log_fp);
+
 }
 
 void stop_log(void) {
@@ -224,22 +159,5 @@ void stop_log(void) {
 }
 
 void write_log_separator(bool debug_settings_for_this_message, const char* header_message) {
-  if ((header_message == NULL) || (strcmp(header_message, "") == 0)) {
-    // Empty header, i.e. footer
-    // Don't write it immediatelly to avoid multiple consecutive headers
-    footer_needs_to_be_written = true;
-    return;
-  }
-  // Write separator with header, skip potential footers
-  footer_needs_to_be_written = false;
-  char header[90];
-  assert(strlen(footer) < 90);
-  assert(strlen(header_message) < 60);
-  // Copy the footer and \0 into the header
-  memcpy(header, footer, strlen(footer) + 1);
-  // Now copz the header-message into the header (without \0)
-  memcpy((header + 10), header_message, strlen(header_message));
-  header[9] = ' ';
-  header[10 + strlen(header_message)] = ' ';
-  write_log_nostamp(true, header);
+
 }

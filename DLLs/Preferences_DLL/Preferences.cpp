@@ -245,17 +245,17 @@ CString CPreferences::DefaultStringValues(int index) {
   case k_prefs_pt_port:
     return "5432";
   case k_prefs_pt_dbname:
-    return "noname";
+    return "PT4 DB";
   case k_prefs_pt_user:
-    return "pokertracker";
+    return "postgres";
   case k_prefs_pt_pass:
-    return "*** top secret ***";
+    return "dbpass";
   case k_prefs_rebuy_script:
     return "Tools\\RebuyDemo.exe";
   case k_prefs_window_class_name:
-    return "OpenHoldem";
+    return "Chrome_WidgetWin_1";
   case k_prefs_mutex_name:
-    return "OHAntiColl";
+    return "Chrome_WidgetWin_4";
   default:
     assert(kThisMustNotHappen);
     return "Error in CPreferences::DefaultStringValues()";

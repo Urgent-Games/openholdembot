@@ -47,7 +47,7 @@ BOOL CDlgSAPrefs15::OnInitDialog() {
   _gui_first_visible.SetCheck(Preferences()->gui_first_visible());
   _gui_all_minimized.SetCheck(Preferences()->gui_all_minimized());
   _gui_less.SetCheck(Preferences()->gui_less());
-  _gui_less.EnableWindow(false);
+  //_gui_less.EnableWindow(false);
 	m_disable_msgbox.SetCheck(Preferences()->disable_msgbox() ? BST_CHECKED : BST_UNCHECKED);
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE

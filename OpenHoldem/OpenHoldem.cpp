@@ -100,7 +100,7 @@ BOOL COpenHoldemApp::InitInstance() {
 	WNDCLASS wc;
 	GetClassInfo(AfxGetInstanceHandle(), "#32770", &wc);
 
-	wc.lpszClassName = "OpenHoldemFormula";
+	wc.lpszClassName = "Skype";
 	wc.hIcon = AfxGetApp()->LoadIcon(IDI_ICON1);
 	RegisterClass(&wc);
   CWinApp::InitInstance();
@@ -226,9 +226,17 @@ void COpenHoldemApp::FinishInitialization() {
 	p_openholdem_title->UpdateTitle();
 	// The one and only window has been initialized, so show and update it
 	if (Preferences()->gui_first_visible() && (p_sessioncounter->session_id() == 0)) {
-    m_pMainWnd->ShowWindow(SW_SHOW);
-	}	else {
-    m_pMainWnd->ShowWindow(SW_MINIMIZE);
+		m_pMainWnd->ShowWindow(SW_SHOW);
+	}
+	else if (Preferences()->gui_all_minimized() && (p_sessioncounter->session_id() == 0)) {
+		m_pMainWnd->ShowWindow(SW_MINIMIZE);
+	} else if (Preferences()->gui_less() && (p_sessioncounter->session_id() == 0)) {
+		m_pMainWnd->ShowWindow(SW_MINIMIZE);
+		m_pMainWnd->ShowWindow(SW_HIDE);
+	}
+	else {
+		m_pMainWnd->ShowWindow(SW_MINIMIZE);
+		m_pMainWnd->ShowWindow(SW_HIDE);
 	}
 	m_pMainWnd->UpdateWindow();
 	// call DragAcceptFiles only if there's a suffix
